@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains acme.module..
+ */
+
+
+/**
+ * Implements hook_theme()
+ * @return mixed
+ */
+function events_theme()
+{
+  $theme['event_custom_theme_hook'] = [
+    'template' => 'events',
+    'variables' => [
+      'variable1' => 'Yet another default text.',
+      'variable2' => 0,
+      'variable3' => [0, 0, 0],
+    ],
+  ];
+  return $theme;
+}

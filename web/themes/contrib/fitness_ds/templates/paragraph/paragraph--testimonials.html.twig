@@ -1,0 +1,18 @@
+
+
+<!-- =========================
+    TESTIMONIAL SECTION   
+============================== -->
+<section id="testimonial" class="parallax-section"  style="background: url({{ file_url(content.field_background_image['#items'].entity.uri.value)}}) no-repeat center top;" {{attributes}}>
+     <div class="container">
+          <div class="row">
+
+               <!-- Testimonial Owl Carousel section
+               ================================================== -->
+               <div id="owl-testimonial" class="owl-carousel">
+                    {{content.field_testimonial}}
+               </div>
+
+          </div>
+     </div>
+</section>

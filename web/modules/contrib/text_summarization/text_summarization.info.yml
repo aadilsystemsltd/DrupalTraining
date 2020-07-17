@@ -1,0 +1,12 @@
+name: 'Text Summarization (TextRank)'
+type: module
+description: 'The text_summarization module uses unsupervised learning algorithm TextRank to auto generate text summary'
+core: 8.x
+package: Content Display
+configure: text_summarization.settings
+
+
+# Information added by Drupal.org packaging script on 2020-06-07
+version: '8.x-1.0'
+project: 'text_summarization'
+datestamp: 1591559163

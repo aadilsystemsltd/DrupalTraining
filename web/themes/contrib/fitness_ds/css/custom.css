@@ -1,0 +1,20 @@
+footer .col-md-5 div {
+    padding-top: 0px;
+}
+footer .copyright-text {
+    padding-top: 5px;
+    text-align: center;
+}
+
+.path-comment #block-fitness-ds-content,
+.path-contact #block-fitness-ds-content{
+	padding: 20px 40px;
+}
+
+.path-contact #block-fitness-ds-content{
+	width: 70%;
+	margin: auto;
+}
+.indented{
+	margin-left: 40px;
+}

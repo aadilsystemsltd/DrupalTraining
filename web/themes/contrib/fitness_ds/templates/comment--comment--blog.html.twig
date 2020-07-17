@@ -1,0 +1,33 @@
+
+{%
+	 set image_class = [
+	    'img-responsive', 'mdb-offline',
+	 ]
+%}
+{%
+	 set comment_class = [
+	    'media-object', 'mdb-offline',
+	 ]
+%}
+		
+
+  	<div class="media">
+  		{%
+			 set image_class = [
+			    'img-responsive', 'mdb-offline',
+			 ]
+		%}
+
+       <div class="media-object mdb-offline">
+       		<div class="media-object pull-left">
+                <img src="{{user_picture}}" class="img-responsive img-circle" alt="{{ user_name }}">
+              </div>
+       </div>
+       <div class="media-body">
+            <h4 class="media-heading">{{ author }}</h4>
+            <h5>{{created}}</h5>
+            <h5>{{content.links}}</h5>
+            <p>{{content.field_comment.0}}</p>
+       </div>
+  	</div>
+

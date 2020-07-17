@@ -1,0 +1,5 @@
+events-styles:
+  version: 8.0.0
+  css:
+    base:
+      css/style.css: {}

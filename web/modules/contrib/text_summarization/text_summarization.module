@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Nothing to see here. It's all about the Field/FieldFormatter.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function text_summarization_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.text_summarization':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Text summarization implements a new field formatter for text fields (text, text_long, and text_with_summary, if you want to get technical) that uses unsupervised learning algorithm TextRank to auto generate text summary. That summary will be available as a token that can be used in meta description tag to improve SEO out of the box.') . '</p>';
+      return $output;
+  }
+}

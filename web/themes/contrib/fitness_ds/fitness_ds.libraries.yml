@@ -1,0 +1,29 @@
+global-styling:
+  css:
+    theme:
+        css/bootstrap.min.css: {}
+        css/animate.css: {}
+        css/font-awesome.min.css: {}
+        css/owl.theme.css: {}
+        css/owl.carousel.css: {}
+        css/style.css: {}
+        css/floating.css: {}
+        css/custom.css: {}
+        'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600': { type: external }
+        'https://fonts.googleapis.com/css?family=Lora:700italic': { type: external }
+  js:
+    js/popper.min.js: {}
+    js/bootstrap.min.js: {}
+    js/jquery.parallax.js: {}
+    js/jquery.nav.js: {}
+    js/jquery.backstretch.min.js: {}
+    js/owl.carousel.min.js: {}
+    js/smoothscroll.js: {}
+    js/wow.min.js: {}
+    js/custom.js: {}
+
+
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/modernizr

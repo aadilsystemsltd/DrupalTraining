@@ -1,0 +1,25 @@
+name: 'Fitness DS'
+description: 'This is Responsive Drupal8 Fitness Theme.'
+core: 8.x
+type: theme
+base theme: classy
+screenshot: fitness_ds.png
+
+regions:
+  header: Header
+  logo: Logo
+  title: Title
+  primary_menu: 'Primary menu'
+  highlighted: Highlighted
+  content: Content
+  sidebar: Sidebar
+  footer_first: 'Footer first'
+  footer_second: 'Footer second'
+  footer_third: 'Footer third'
+  
+libraries:
+  - fitness_ds/global-styling
+# Information added by Drupal.org packaging script on 2020-01-05
+version: '8.x-1.0'
+project: 'fitness_ds'
+datestamp: 1578231188

@@ -1,0 +1,17 @@
+
+<!-- =========================
+    PRICE SECTION   
+============================== -->
+<section id="price"   {{attributes}} class="parallax-section"  style="background: url({{ file_url(content.field_background_image['#items'].entity.uri.value)}}) no-repeat center top;">
+	<div class="container">
+		<div class="row">
+
+			<div class="wow fadeInUp col-md-12 col-sm-12" data-wow-delay="0.9s">
+				<h2>{{content.field_title.0}}</h2>
+                    <p>{{content.field_description.0}}</p>
+               </div>
+               {{content.field_pprice}}
+			
+		</div>
+	</div>
+</section>

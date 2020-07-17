@@ -1,0 +1,23 @@
+			<style type="text/css">
+				#blog .item-{{fields.counter.content}}.blog-thumb:hover{
+                    background: url({{fields.field_image.content}});
+                    -webkit-background-size: cover;
+                    background-size: cover;
+                    background-position: center center;
+                    color: #ffffff;
+                }
+
+			</style>
+			<div class="wow fadeInUp col-md-6 col-sm-6 col-sm-12" data-wow-delay="0.9s">
+				<div class="blog-thumb item-{{fields.counter.content}}">
+					<span class="blog-date">
+						{{fields.field_categories.content}} / {{fields.created.content}}
+					</span>
+					<h3 class="blog-title">
+						<a href="{{fields.view_node.content}}">
+							{{fields.title.content}}
+						</a>
+					</h3>
+					<h5 id="blog-author">{{fields.uid.content}}</h5>
+				</div>
+			</div>

@@ -1,0 +1,34 @@
+
+
+<!-- =========================
+    OVERVIEW SECTION   
+============================== -->
+<section id="overview" class="parallax-section" {{attributes}}>
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-6 col-sm-12">
+                     <img src="{{ file_url(content.field_image['#items'].entity.uri.value)}}"
+                                 class="home_float_image animate floatingNext img-responsive" 
+                                 alt="{{ content.field_image['#items'].alt }}" 
+                                 title="{{ content.field_image['#items'].title }}">
+                    <blockquote class="wow fadeInUp" data-wow-delay="1.9s">
+                      {{content.field_description.0}}
+                    </blockquote>
+               </div>
+
+               <div class="col-md-1"></div>
+
+               <div class="wow fadeInUp col-md-4 col-sm-12" data-wow-delay="1s">
+                    <div class="overview-detail">
+                         <h2>{{content.field_title.0}}</h2>
+                         {{content.field_content.0}}
+                         <a href="{{content.field_link.0['#url']}}" class="btn btn-default smoothScroll">{{content.field_link.0['#title']}}</a>
+                    </div>
+               </div>
+
+               <div class="col-md-1"></div>
+
+          </div>
+     </div>
+</section>

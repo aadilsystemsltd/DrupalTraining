@@ -1,0 +1,251 @@
+<?php
+use Drupal\Core\Template\Attribute;
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function fitness_ds_preprocess_html(&$variables) {
+  global $base_url;
+  $theme = \Drupal::theme()->getActiveTheme();
+   $variables['theme_path']  = $base_url.'/'. $theme->getPath();
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function fitness_ds_preprocess_page(&$variables) {
+  global $base_url;
+  $variables['logo_path'] = \Drupal::theme()->getActiveTheme()->getLogo();
+  $variables['base_path']=$base_url;
+
+  $config = \Drupal::config('system.site');
+  $variables['site_name'] = $config->get('name');
+  $variables['site_slogan'] = $config->get('slogan');
+
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function fitness_ds_preprocess_menu(&$variables, $hook) {
+  if ($hook == 'menu__main') { // We're doing that for main menu.
+    // Get the current path.
+    $current_path = \Drupal::request()->getRequestUri();
+    $items = $variables['items'];
+    foreach ($items as $key => $item) {
+      // If path is current_path, set active to li.
+      if ($item['url']->toString() == $current_path) {
+        // Add active link.
+        $variables['items'][$key]['attributes']['class'] = 'active home_float_image animate floatingTop';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function fitness_ds_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Get Request Object.
+  $request = \Drupal::request();
+  if ($exception = $request->attributes->get('exception')) {
+    // Get the status code.
+    $status_code = $exception->getStatusCode();
+    if (in_array($status_code, array(401, 403, 404))) {
+      $suggestions[] = 'page__' . $status_code;
+    }
+  }
+  
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $suggestions[] = 'page__' . $node->bundle();
+  }
+}
+
+function fitness_ds_preprocess_node(&$variables) {
+  /** @var \Drupal\node\NodeInterface $node */
+  global $base_url;
+  $node = $variables['node'];
+  $author=$node->getOwner();
+  if($author->user_picture){   
+    $uri_path=$author->user_picture->entity->getFileUri();
+    $variables['author_picture'] = ImageStyle::load('thumbnail')->buildUrl($uri_path); 
+  }
+  else
+    $variables['author_picture'] = $base_url.'/themes/fitness_ds/images/author.png';
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fitness_ds_theme(&$existing, $type, $theme, $path) {
+  $hooks = array();
+  $hooks['user_login_form'] = array(
+      'render element' => 'form',
+      'template' => 'user-login-form',
+  );
+  return $hooks;
+}
+
+/**
+ * Implements template_preprocess_paragraph().
+ *
+ */
+
+function fitness_ds_preprocess_paragraph(&$variables) {
+  $paragraph = $variables['paragraph'];
+  if($paragraph->getType()=='price'){
+    $variables['content']['field_features']=$paragraph->get('field_features')->getValue();
+  }
+  elseif($paragraph->getType()=='home'){
+    /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $prgMediaField */
+    $prgMediaField = $paragraph->get('field_background_images');
+    $prgMediaFieldValue = $prgMediaField->getValue();
+    $images=[];
+    foreach ($prgMediaFieldValue as $key => $value) {
+      $file = \Drupal\file\Entity\File::load($value['target_id']);
+      $images[] = file_create_url($file->getFileUri());
+    }
+    $variables['bg_imgs']=implode(",", $images);
+  }
+  
+}
+
+
+/**
+* Implements hook_form_alter().
+*/
+function fitness_ds_form_alter( &$form, &$form_state, $form_id ) {
+  if ( strpos($form_id, 'user_register_form') !== false ) {
+    $form['#attributes']['class'] = t( 'container' );
+    $form['account']['#attributes']['class'] = t( 'col-lg-12' );
+    $form['account']['mail']['#prefix'] ='';
+    $form['account']['mail']['#title_display'] = t( '' );
+    $form['account']['mail']['#description'] = t( '' );
+    $form['account']['mail']['#attributes']['placeholder'] = t('E-mail');
+    $form['account']['mail']['#attributes']['class'][] ='form-control';
+    $form['account']['mail']['#wrapper_attributes']['class'][] ='col-md-6 col-sm-6';
+    $form['account']['name']['#title_display'] = t('');
+    $form['account']['name']['#description'] = t( '' );
+    $form['account']['name']['#attributes']['class'][] ='form-control';
+    $form['account']['name']['#attributes']['placeholder'] = t('Username');
+    $form['account']['name']['#wrapper_attributes']['class'][] ='col-md-6 col-sm-6';
+    
+    $form['field_first_name']['widget'][0]['#attributes']['class'][] ='form-control';
+    $form['field_first_name']['widget'][0]['#wrapper_attributes']['class'][] ='col-md-6 col-sm-6';
+    
+    $form['field_last_name']['widget'][0]['#attributes']['class'][] ='form-control';
+    $form['field_last_name']['widget'][0]['#wrapper_attributes']['class'][] ='col-md-6 col-sm-6';
+
+    $form['field_phone_number']['widget'][0]['#attributes']['class'][] ='form-control';
+    $form['field_phone_number']['widget'][0]['#wrapper_attributes']['class'][] ='col-md-6 col-sm-6';
+
+    $form['field_select_price']['widget']['#attributes']['class'][] ='form-control';
+    $form['field_select_price']['widget']['#wrapper_attributes']['class'][] ='col-md-6 col-sm-6';
+
+    $form['actions']['submit']['#value'] = t('Create Account');
+    $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-block';
+    $form['actions']['#attributes']['class'][] = 'col-lg-12 text-center';
+    // echo "<pre>";
+    // print_r($form['field_select_price']);
+    // print_r($form['field_last_name']);
+    // print_r($form['field_first_name']);
+    // echo "</pre>";
+    // die();
+
+  }
+  if ( strpos($form_id, 'user_login_form') !== false ) {
+    $form['name']['#title'] = t('');
+    $form['name']['#description'] = t('');
+    $form['pass']['#title'] = t('');
+    $form['pass']['#description'] = t('');
+    $form['name']['#attributes']['placeholder'] = t('Name');
+    $form['pass']['#attributes']['placeholder'] = t('Password');
+    $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary btn-block';
+  }
+  if ( strpos($form_id, 'user_form') !== false ) {
+    // kint($form['account']);
+    $form['account']['name']['#access'] = TRUE;
+    $form['account']['mail']['#title_display'] = t('');
+    $form['account']['mail']['#description'] = t('');
+    $form['account']['current_pass']['#title_display'] = t('');
+    $form['account']['current_pass']['#description'] = t('');
+    $form['account']['current_pass']['#suffix'] = '<p>Required if you want to change the Email address or Password above.';
+    $form['user_picture']['widget']['0']['#title'] = t('');
+    $form['actions']['submit']['#value'] = t('Save');
+    $form['actions']['delete']['#value'] = t('Delete Profile');
+    $form['actions']['submit']['#attributes']['class'][] = 'btn btn-primary';
+  }
+  
+  if ($form_id=='comment_comment_form') {
+
+    //add class subject
+    $form['subject']['widget']['0']['value']['#attributes']['class'][]='form-control';
+
+    //add placeholder subject
+    $form['subject']['widget']['0']['value']['#attributes']['placeholder'] = t('Subject');
+    
+    //add class subject
+    $form['name']['widget']['0']['value']['#attributes']['class'][]='form-control';
+
+    //add placeholder subject
+    $form['name']['widget']['0']['value']['#attributes']['placeholder'] = t('Subject');
+
+
+    //add class subject
+    $form['field_comment']['widget']['0']['value']['#attributes']['class'][]='form-control';
+
+    $form['actions']['submit']['#attributes']['class'][]='btn btn-default btn-hover';
+    $form['actions']['preview']['#attributes']['class'][]='btn btn-default btn-hover';
+
+  }
+  elseif ($form_id=='comment_comment_delete_form'){
+    $form['actions']['submit']['#attributes']['class'][]='btn btn-default btn-hover';
+
+  }
+  if ($form_id == 'contact_message_feedback_form'){
+    $form['subject']['widget']['0']['value']['#attributes']['class'][]='form-control';
+
+    //add placeholder subject
+    $form['subject']['widget']['0']['value']['#attributes']['placeholder'] = t('Subject');
+    $form['subject']['widget']['0']['value']['#wrapper_attributes']['class'][]='col-md-12';
+
+    
+    //add class subject
+    $form['name']['#attributes']['class'][]='form-control';
+    $form['name']['#wrapper_attributes']['class'][]='col-md-6';
+
+    //add class subject
+    $form['mail']['#attributes']['class'][]='form-control';
+    $form['mail']['#wrapper_attributes']['class'][]='col-md-6';
+
+    //add placeholder subject
+    $form['mail']['widget']['0']['value']['#attributes']['placeholder'] = t('Mail-Id');
+    //add class subject
+    $form['message']['widget']['0']['value']['#attributes']['class'][]='form-control';
+    $form['message']['widget']['0']['value']['#wrapper_attributes']['class'][]='col-md-12';
+
+    //add placeholder subject
+    $form['message']['widget']['0']['value']['#attributes']['placeholder'] = t('Message');
+
+
+    $form['actions']['submit']['#attributes']['class'][]='btn btn-default btn-hover';
+    $form['actions']['preview']['#attributes']['class'][]='btn btn-default btn-hover';
+  }
+}
+
+function fitness_ds_preprocess_comment(&$variables) {
+  $comment = $variables['elements']['#comment'];
+  $account = $comment
+    ->getOwner();
+  $variables['created'] = format_date($comment
+    ->getCreatedTime());
+
+  $uri_path=$account->user_picture->entity->getFileUri();
+  $variables['user_picture'] = ImageStyle::load('thumbnail')->buildUrl($uri_path);
+  $variables['user_name'] =$account->name->value;
+  
+}
+
+
+?>

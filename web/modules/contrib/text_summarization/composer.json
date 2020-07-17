@@ -1,0 +1,27 @@
+{
+  "name": "drupal/text_summarization",
+  "description": "The text_summarization module uses unsupervised learning algorithm TextRank to auto generate text summary",
+  "homepage": "https://drupal.org/project/text_summarization",
+  "authors": [
+    {
+      "name": "Majid Ali Khan (majid.ali)",
+      "homepage": "https://www.drupal.org/u/majid.ali",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Saad Waseem (saad.waseem)",
+      "homepage": "https://www.drupal.org/u/saad.waseem",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://drupal.org/project/issues/text_summarization",
+    "source": "https://git.drupalcode.org/project/text_summarization"
+  },
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "php-science/textrank": "dev-master"
+  }
+}

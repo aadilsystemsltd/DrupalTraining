@@ -1,0 +1,16 @@
+events.content:
+ # This path directs to the controller.
+  path: '/content'
+  defaults:
+    _controller: '\Drupal\events\Controller\EventsController::content'
+    _title: 'My first page in Events'
+  requirements:
+    _permission: 'access content'
+
+events.form:
+ path: '/eventform'
+ defaults:
+   _title: 'Events form'
+   _form: '\Drupal\events\Form\EventForm'
+ requirements:
+   _permission: 'access content'

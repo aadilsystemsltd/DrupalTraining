@@ -1,0 +1,8 @@
+field.formatter.settings.text_summarization:
+  type: mapping
+  label: 'Text summarization formatter settings'
+  mapping:
+    summary_options:
+      type: string
+      label: 'Summary options'
+

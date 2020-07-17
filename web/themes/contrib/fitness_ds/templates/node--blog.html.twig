@@ -1,0 +1,40 @@
+
+               <div class="col-md-8 col-sm-7">
+
+                    <div class="blog-content wow fadeInUp" data-wow-delay="1s">
+                    <h3>{{ node.label }}</h3>
+                         <span class="meta-date"><a href="#">{{ node.created.value|date("F d,Y")  }}</a></span>
+                         <span class="meta-comments"><a href="#blog-comments">{{node.comment.comment_count}} comments</a></span>
+                         <span class="meta-author"><a href="#blog-author">{{ node.Owner.name.value }}</a></span>
+                         <div class="blog-clear"></div>
+
+                         <div class="blog-image wow fadeInUp" data-wow-delay="0.9s">
+                         {%if node.field_image.entity.uri.value != "" %}
+                              <img src="{{file_url(node.field_image.entity.uri.value)}}" 
+                              class="img-responsive" 
+                              alt="{{node.field_image.entity.alt}}"
+                              title="{{node.field_image.entity.title}}">
+                         {%endif%}
+                         </div>
+
+                         {{ node.body.value|raw }}
+                    </div>
+                
+                    
+                
+                    <div class="blog-author wow fadeInUp" data-wow-delay="1s">
+                         <div class="media">
+                              <div class="media-object pull-left">
+                                   <a href="{{ path('entity.user.canonical', {'user': node.getOwnerId}) }}"><img src="{{author_picture}}" class="img-responsive img-circle" alt="{{ node.Owner.name.value }}"></a>
+                              </div>
+                              <div class="media-body">
+                                   <h4 class="media-heading">{{ node.Owner.name.value }}</h4>
+                                   <p>
+                                        {{ node.field_author_description.value }}
+                                   </p>
+                              </div>
+                         </div>
+                    </div>
+
+                    {{ content.comment }}
+               </div>

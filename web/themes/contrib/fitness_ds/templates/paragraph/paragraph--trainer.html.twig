@@ -1,0 +1,19 @@
+
+               <div class="wow fadeInUp col-md-4 col-sm-6" data-wow-delay="1.9s" {{attributes}}>
+                    <div class="trainer-thumb">
+                         <img src="{{ file_url(content.field_image['#items'].entity.uri.value)}}"
+                                 class="img-responsive" 
+                                 alt="{{ content.field_image['#items'].alt }}" 
+                                 title="{{ content.field_image['#items'].title }}">
+                              <div class="trainer-overlay">
+                                   <div class="trainer-des">
+                                        <h2>{{content.field_name.0}}</h2>
+                                        <h3>{{content.field_designation.0}}</h3>
+                                        <ul class="social-icon">
+                                            {{content.field_social_link}}
+                                        </ul>
+                                   </div>
+                              </div>
+                    </div>
+                    <p>{{content.field_description.0}}</p>
+               </div>

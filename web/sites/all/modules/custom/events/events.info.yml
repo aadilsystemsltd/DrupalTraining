@@ -1,0 +1,6 @@
+name: Events Module
+description: Creates a page showing "Events Contents".
+package: Custom
+type: module
+version: 1.0
+core: 8.x

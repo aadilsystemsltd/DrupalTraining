@@ -1,0 +1,13 @@
+services:
+  text_summarization.textrank:
+    class: PhpScience\TextRank\TextRankFacade
+  plugin.manager.text_summarization:
+    class: Drupal\text_summarization\TextSummarizationPluginManager
+    parent: default_plugin_manager
+  text_summarization.textrank.helper:
+    class: Drupal\text_summarization\Services\TextRankHelper
+    arguments: ['@plugin.manager.text_summarization']
+
+parameters:
+  text_summarization.parameter: TRUE
+
