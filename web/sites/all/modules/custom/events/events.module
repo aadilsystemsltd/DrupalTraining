@@ -10,7 +10,7 @@
  * Implements hook_theme()
  * @return mixed
  */
-function events_theme()
+function events_test_theme()
 {
   $theme['event_custom_theme_hook'] = [
     'template' => 'events',
@@ -22,3 +22,17 @@ function events_theme()
   ];
   return $theme;
 }
+
+
+function events_theme()
+{
+  // We use a template file to allow for translation of blocks of content.
+  // Therefore we need to add this content at the theming layer.
+  return [
+    'events_description' => [
+      'template' => 'description',
+      'variables' => [],
+    ],
+  ];
+}
+

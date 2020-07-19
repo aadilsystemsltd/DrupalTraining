@@ -1,5 +1,21 @@
+events.test:
+  path: '/test'
+  defaults:
+    _controller: '\Drupal\events\Controller\TestController::index'
+    _title: 'test'
+  requirements:
+    _permission: 'access content'
+
+
+events.showEvents:
+  path: '/display'
+  defaults:
+    _controller: '\Drupal\events\Controller\EventsController::display'
+    _title: 'Display Events'
+  requirements:
+    _permission: 'access content'
+
 events.content:
- # This path directs to the controller.
   path: '/content'
   defaults:
     _controller: '\Drupal\events\Controller\EventsController::content'
@@ -7,10 +23,22 @@ events.content:
   requirements:
     _permission: 'access content'
 
-events.form:
- path: '/eventform'
+
+
+
+events.form.create:
+ path: '/event/create'
  defaults:
-   _title: 'Events form'
-   _form: '\Drupal\events\Form\EventForm'
+   _title: 'Create Event'
+   _form: '\Drupal\events\Form\Create'
  requirements:
    _permission: 'access content'
+
+
+events.form.delete:
+ path: '/event/delete/{cid}'
+ defaults:
+   _title: 'Delete Event'
+   _form: '\Drupal\events\Form\DeleteForm'
+ requirements:
+     _access: 'TRUE'

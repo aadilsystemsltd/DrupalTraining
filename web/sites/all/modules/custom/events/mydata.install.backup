@@ -1,0 +1,96 @@
+<?php
+
+function event_schema() {
+  $schema['tbl_event'] = array(
+    'fields' => array(
+      'id'=>array(
+        'type'=>'serial',
+        'not null' => TRUE,
+      ),
+      'Title'=>array(
+        'type' => 'varchar',
+        'length' => 40,
+        'not null' => TRUE,
+      ),
+      'Participants'=>array(
+        'type' => 'int',
+        'size' => 'small',
+        'not null' => TRUE,
+      ),
+      'Image'=>array(
+        'type' => 'varchar',
+        'length' => 1000,
+        'not null' => TRUE,
+      ),
+      'Gallery'=>array(
+        'type' => 'int',
+        'length' => 25,
+        'not null' => TRUE,
+      ),
+      'Start_End_Date'=>array(
+        'type' => 'varchar',
+        'length' => 40,
+        'not null' => TRUE,
+      ),
+      'Category'=>array(
+        'type' => 'varchar',
+        'length' => 25,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+
+}
+
+
+function categoty_schema()
+{
+  $schema['tbl_category'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'category' => array(
+        'type' => 'varchar',
+        'length' => 40,
+        'not null' => TRUE,
+      )
+    ),
+    'primary key' => array('id')
+  );
+  return $schema;
+}
+
+function gallery_schema()
+{
+  $schema['tbl_gallery'] = array(
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'path' => array(
+        'type' => 'varchar',
+        'length' => 1000,
+        'not null' => TRUE,
+      ),
+      'event_id' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      )
+    ),
+    'primary key' => array('id'),
+    'foreign keys' => array(
+      'event_id' => array(
+        'table' => 'tbl_event',
+        'columns' => array('id' => 'id'),
+      )
+    ),
+  );
+  return $schema;
+}
