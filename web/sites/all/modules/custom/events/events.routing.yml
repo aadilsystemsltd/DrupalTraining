@@ -1,3 +1,4 @@
+# Test Controller Methods Route
 events.test:
   path: '/test'
   defaults:
@@ -15,6 +16,15 @@ events.content:
   requirements:
     _permission: 'access content'
 
+
+# Event Controller Methods Route
+events.index:
+  path: '/event/test'
+  defaults:
+    _controller: '\Drupal\events\Controller\EventsController::index'
+    _title: 'test'
+  requirements:
+    _permission: 'access content'
 
 events.showEvents:
   path: '/display'

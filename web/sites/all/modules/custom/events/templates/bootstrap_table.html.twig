@@ -1,0 +1,21 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			{% for i in header %}
+				<th scope="col">
+					{{ i }}
+				</th>
+			{% endfor %}
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			{% for item in rows %}
+				<td>{{ item }}</td>
+			{% endfor %}
+			<td><a href=''>Edit</a></td>
+			<td><a href=''>Delete</a></td>C
+		</tr>
+	</tbody>
+</table>

@@ -54,4 +54,11 @@ class EventService
     $record = $query->execute()->fetchAssoc();
     return $record;
   }
+
+  public function getAllEvents()
+  {
+    $query = $this->database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
+    $results = $query->execute()->fetchAssoc();
+    return  $results;
+  }
 }

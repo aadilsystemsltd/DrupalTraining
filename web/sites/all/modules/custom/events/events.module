@@ -9,20 +9,29 @@ function events_theme($existing, $type, $theme, $path)
   return [
     // Theme Hook For content() in Test Controller.
     'test_custom_hook' =>
-      [
-        'template' => 'events',
-        'variables' =>
-          [
-            'variable1' => 'Yet another default text.',
-            'variable2' => 0,
-            'variable3' => [0, 0, 0],
-          ]
-      ],
+    [
+      'template' => 'events',
+      'variables' =>
+        [
+          'variable1' => 'Yet another default text.',
+          'variable2' => 0,
+          'variable3' => [0, 0, 0],
+        ]
+    ],
     // Theme Hook For index() in Event Controller.
     'event_custom_hook' =>
       [
         'template' => 'description',
         'variables1' => 'Empty Template',
       ],
+     // Theme Hook For display() in Event Controller.
+    'event_bootstrap_table_hook' => [
+      'template' => 'bootstrap_table',
+      'variables' =>
+        [
+          'header' => [],
+          'rows' => [],
+        ]
+    ]
   ];
 }
