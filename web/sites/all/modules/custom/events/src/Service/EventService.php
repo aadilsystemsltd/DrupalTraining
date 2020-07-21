@@ -19,7 +19,7 @@ class EventService
   public function __construct(AccountProxy $currentUser)
   {
     $this->currentUser = $currentUser;
-    $this->database = \Drupal::database();
+    $this->database = \Drupal::database(); // Inject Db Service...Fix
   }
 
   /**
@@ -58,7 +58,7 @@ class EventService
   public function getAllEvents()
   {
     $query = $this->database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
-    $results = $query->execute()->fetchAssoc();
-    return  $results;
+    $results = $query->execute()->fetchAll();
+    return $results;
   }
 }

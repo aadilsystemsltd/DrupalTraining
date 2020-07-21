@@ -7,13 +7,13 @@
 function events_theme($existing, $type, $theme, $path)
 {
   return [
-     // Theme Hook For display() in Event Controller.
+    // Theme Hook For display() in Event Controller.
     'event_bootstrap_table_hook' => [
       'template' => 'bootstrap_table',
       'variables' =>
         [
           'header' => [],
-          'rows' => [],
+          'rows' => []
         ]
     ]
   ];
