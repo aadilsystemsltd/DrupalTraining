@@ -1,38 +1,28 @@
 <?php
 
 /**
- * @file
- * Contains acme.module..
- */
-
-
-/**
  * Implements hook_theme()
  * @return mixed
  */
-function events_test_theme()
+function events_theme($existing, $type, $theme, $path)
 {
-  $theme['event_custom_theme_hook'] = [
-    'template' => 'events',
-    'variables' => [
-      'variable1' => 'Yet another default text.',
-      'variable2' => 0,
-      'variable3' => [0, 0, 0],
-    ],
-  ];
-  return $theme;
-}
-
-
-function events_theme()
-{
-  // We use a template file to allow for translation of blocks of content.
-  // Therefore we need to add this content at the theming layer.
   return [
-    'events_description' => [
-      'template' => 'description',
-      'variables' => [],
-    ],
+    // Theme Hook For content() in Test Controller.
+    'test_custom_hook' =>
+      [
+        'template' => 'events',
+        'variables' =>
+          [
+            'variable1' => 'Yet another default text.',
+            'variable2' => 0,
+            'variable3' => [0, 0, 0],
+          ]
+      ],
+    // Theme Hook For index() in Event Controller.
+    'event_custom_hook' =>
+      [
+        'template' => 'description',
+        'variables1' => 'Empty Template',
+      ],
   ];
 }
-

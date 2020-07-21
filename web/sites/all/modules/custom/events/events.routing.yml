@@ -1,8 +1,17 @@
 events.test:
   path: '/test'
   defaults:
-    _controller: '\Drupal\events\Controller\TestController::index'
+    _controller: '\Drupal\events\Controller\EventsController::index'
     _title: 'test'
+  requirements:
+    _permission: 'access content'
+
+
+events.content:
+  path: '/test/content'
+  defaults:
+    _controller: '\Drupal\events\Controller\TestController::content'
+    _title: 'My first page in Events'
   requirements:
     _permission: 'access content'
 
@@ -15,22 +24,12 @@ events.showEvents:
   requirements:
     _permission: 'access content'
 
-events.content:
-  path: '/content'
-  defaults:
-    _controller: '\Drupal\events\Controller\EventsController::content'
-    _title: 'My first page in Events'
-  requirements:
-    _permission: 'access content'
-
-
-
 
 events.form.create:
  path: '/event/create'
  defaults:
    _title: 'Create Event'
-   _form: '\Drupal\events\Form\Create'
+   _form: '\Drupal\events\Form\CreateEvent'
  requirements:
    _permission: 'access content'
 

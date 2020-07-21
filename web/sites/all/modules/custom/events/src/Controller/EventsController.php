@@ -7,41 +7,13 @@ use Drupal\Core\Url;
 
 class EventsController extends ControllerBase
 {
-  public function content()
-  {
-    // Do something with your variables here.
-    $myText = 'This is not just a default text!';
-    $myNumber = 1;
-    $myArray = [1, 2, 3, 4, 5, 6];
 
+  public function index()
+  {
     return [
-      // Your theme hook name.
-      '#theme' => 'event_custom_theme_hook',
-      // Your variables.
-      '#variable1' => $myText,
-      '#variable2' => $myNumber,
-      '#variable3' => $myArray,
-      '#attached' => [
-        'library' => [
-          'events/events-styles', //include our custom library for this response
-        ]
-      ]
+      '#theme' => 'event_custom_hook',
+      '#variable1' => 'This is not just a default text!'
     ];
-  }
-
-  public function getContent()
-  {
-    // First we'll tell the user what's going on. This content can be found
-    // in the twig template file: templates/description.html.twig.
-    // @todo: Set up links to create nodes and point to devel module.
-    $build = [
-      'description' => [
-        '#theme' => 'events_description',
-        '#description' => 'foo',
-        '#attributes' => [],
-      ],
-    ];
-    return $build;
   }
 
   public function display()
@@ -60,15 +32,13 @@ class EventsController extends ControllerBase
 
     //select records from table
     $database = \Drupal::database();
-    $query = $database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants','Image','Start_End_Date', 'Category']);
-    $query->innerJoin('tbl_gallery', 'g', 'e.id = g.event_id');
-    $query->fields('g',['path']);
+    $query = $database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
     $results = $query->execute()->fetchAll();
 
     $rows = array();
     foreach ($results as $data) {
       $delete = Url::fromUserInput('/event/delete/' . $data->id);
-      $edit   = Url::fromUserInput('/event/create?id=' . $data->id);
+      $edit = Url::fromUserInput('/event/create?id=' . $data->id);
 
       //print the data from table
       $rows[] = array(
