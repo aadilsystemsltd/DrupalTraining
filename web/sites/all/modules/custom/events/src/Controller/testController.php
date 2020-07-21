@@ -8,6 +8,9 @@ class TestController extends ControllerBase
 {
   public function index()
   {
+    $ourService = \Drupal::service('events.DbService');
+    echo $ourService->userName();
+    die();
     return [
       '#markup' => 'Hello, world',
     ];

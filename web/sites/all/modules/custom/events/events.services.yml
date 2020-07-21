@@ -1,4 +1,4 @@
 services:
-    events.saySomething:
-        class: Drupal\events\Services\EventService
+    events.DbService:
+        class: \Drupal\events\Service\EventService
         arguments: ['@current_user']

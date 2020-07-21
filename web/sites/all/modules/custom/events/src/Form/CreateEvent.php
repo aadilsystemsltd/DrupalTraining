@@ -10,7 +10,6 @@ namespace Drupal\events\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
-use Drupal\Core\Database\Database;
 use Drupal\file\Entity\File;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -32,14 +31,9 @@ class CreateEvent extends FormBase
 
   public function buildForm(array $form, FormStateInterface $form_state)
   {
-    $conn = Database::getConnection();
     $record = array();
     if (isset($this->getIdFromRoute)) {
-      $query = $conn->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
-      $query->innerJoin('tbl_gallery', 'g', 'e.id = g.event_id');
-      $query->fields('g', ['path']);
-      $query->condition('e.id', $this->getIdFromRoute);
-      $record = $query->execute()->fetchAssoc();
+      $record = \Drupal::service('events.DbService')->innerJoinWithEventAndGallery($this->getIdFromRoute);
     }
 
     $form['Title'] = array(
@@ -134,31 +128,22 @@ class CreateEvent extends FormBase
       'Start_End_Date' => $start_end_date,
       'Category' => $category,
     );
-    $query = \Drupal::database();
 
     if (isset($this->getIdFromRoute)) {
-      $query->update('tbl_event')
-        ->fields($field)
-        ->condition('id', $this->getIdFromRoute)
-        ->execute();
-
+      \Drupal::service('events.DbService')->updateByEventId($field, $this->getIdFromRoute);
       $this->messenger()->addMessage("succesfully updated");
       $form_state->setRedirect('events.showEvents');
       return;
     }
     // If Record Is Not Updated.
-    $resultedEventId = $query->insert('tbl_event')
-      ->fields($field)
-      ->execute();
+    $resultedEventId = \Drupal::service('events.DbService')->insertIntoTable($field, 'tbl_event');
 
     foreach ($gallery as $value) {
       $galleryField  = array(
         'path'   =>  $value,
         'event_id' =>  $resultedEventId
       );
-      $query->insert('tbl_gallery')
-        ->fields($galleryField)
-        ->execute();
+      \Drupal::service('events.DbService')->insertIntoTable($galleryField, 'tbl_gallery');
     }
 
     $this->messenger()->addMessage("succesfully saved");
