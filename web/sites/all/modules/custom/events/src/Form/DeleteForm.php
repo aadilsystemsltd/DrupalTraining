@@ -64,18 +64,8 @@ class DeleteForm extends ConfirmFormBase
 
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
-    $query = \Drupal::database();
-
-    // Delete From tbl_gallery First Because of Foriegn Key Constraints.
-    $query->delete('tbl_gallery')
-      ->condition('event_id', $this->cid)
-      ->execute();
-
-      // Delete From tbl_event.
-      $query->delete('tbl_event')
-        ->condition('id', $this->cid)
-        ->execute();
-      $this->messenger()->addMessage("succesfully deleted");
-      $form_state->setRedirect('events.showEvents');
+    \Drupal::service('events.DbService')->deleteEvent($this->cid);
+    $this->messenger()->addMessage("succesfully deleted");
+    $form_state->setRedirect('events.showEvents');
   }
 }

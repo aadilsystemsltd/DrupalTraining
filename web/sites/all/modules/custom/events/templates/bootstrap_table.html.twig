@@ -1,32 +1,25 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			{% for i in header[0] %}
+			{% for i in header %}
 				<th scope="col">
 					{{ i }}
 				</th>
 			{% endfor %}
 		</tr>
 	</thead>
-
 	<tbody>
-<tr>
 		{% for tr in rows %}
-
-			<td>{{ tr }}</td>
-
+			<tr>
+				<td>{{ tr.id }}</td>
+				<td>{{ tr.Title }}</td>
+				<td>{{ tr.Participants }}</td>
+				<td>{{ tr.Image }}</td>
+				<td>{{ tr.Start_End_Date }}</td>
+				<td>{{ tr.Category }}</td>
+				<td><a href="{{ path('events.form.create', {'id': tr.id}) }}">Edit</a></td>
+				<td><a href="{{ path('events.form.delete', {'cid': tr.id}) }}">Delete</a></td>
+			</tr>
 		{% endfor %}
-</tr>
-
-
 	</tbody>
 </table>
-
-
-{# <td>{{ item }}</td>
-<td>
-	<a href="">Edit</a>
-</td>
-<td>
-	<a href="">Delete</a>
-</td> #}

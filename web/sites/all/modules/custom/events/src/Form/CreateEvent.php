@@ -50,8 +50,8 @@ class CreateEvent extends FormBase
       '#default_value' => (isset($record['Participants']) && $this->getIdFromRoute) ? $record['Participants'] : '',
     );
 
-    $form['uploaded_Image'] = array(
-      '#type' => 'file',
+    $form['Image'] = array(
+      '#type' => 'managed_file',
       '#title' => ('Event Image'),
       '#description' => t('Allowed extensions: gif png jpg jpeg'),
       '#upload_location' => 'public://pictures/EventImages',
@@ -117,7 +117,7 @@ class CreateEvent extends FormBase
     $field = $form_state->getValues();
     $title = $field['Title'];
     $participants = $field['Participants'];
-    $image = $field['Image'];
+    $image = "Empty Image";//$field['Image'];
     $gallery = $field['Gallery'];
     $start_end_date = $field['Start_End_Date'];
     $category = $field['Category'];
@@ -137,7 +137,6 @@ class CreateEvent extends FormBase
     }
     // If Record Is Not Updated.
     $resultedEventId = \Drupal::service('events.DbService')->insertIntoTable($field, 'tbl_event');
-
     foreach ($gallery as $value) {
       $galleryField  = array(
         'path'   =>  $value,
@@ -147,7 +146,6 @@ class CreateEvent extends FormBase
     }
 
     $this->messenger()->addMessage("succesfully saved");
-    $response = new RedirectResponse("/display");
-    $response->send();
+    $form_state->setRedirect('events.showEvents');
   }
 }

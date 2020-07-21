@@ -9,14 +9,12 @@ class EventsController extends ControllerBase
 {
   public function display()
   {
-    $header[] = ['Id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category', 'Edit', 'Delete'];
+    $header = ['Id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category', 'Edit', 'Delete'];
     $results = \Drupal::service('events.DbService')->getAllEvents();
-
-   // dump($header);
     return [
       '#theme' => 'event_bootstrap_table_hook',
       '#header' => $header,
-      '#rows' =>  $results
+      '#rows' => $results
     ];
   }
 }

@@ -40,7 +40,7 @@ class EventService
 
   public function insertIntoTable(array $fields, string $tableName)
   {
-    $this->database->insert($tableName)
+    return $this->database->insert($tableName)
       ->fields($fields)
       ->execute();
   }
@@ -58,7 +58,20 @@ class EventService
   public function getAllEvents()
   {
     $query = $this->database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
-    $results = $query->execute()->fetchAll();
+    $results = $query->execute()->fetchAllAssoc('id');
     return $results;
+  }
+
+
+  public function deleteEvent(int $eventId)
+  {
+    $this->database->delete('tbl_gallery')
+    ->condition('event_id', $eventId)
+      ->execute();
+
+    // Delete From tbl_event.
+    $this->database->delete('tbl_event')
+    ->condition('id', $eventId)
+      ->execute();
   }
 }
