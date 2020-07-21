@@ -1,31 +1,4 @@
-# Test Controller Methods Route
-events.test:
-  path: '/test'
-  defaults:
-    _controller: '\Drupal\events\Controller\TestController::index'
-    _title: 'test'
-  requirements:
-    _permission: 'access content'
-
-
-events.content:
-  path: '/test/content'
-  defaults:
-    _controller: '\Drupal\events\Controller\TestController::content'
-    _title: 'My first page in Events'
-  requirements:
-    _permission: 'access content'
-
-
 # Event Controller Methods Route
-events.index:
-  path: '/event/test'
-  defaults:
-    _controller: '\Drupal\events\Controller\EventsController::index'
-    _title: 'test'
-  requirements:
-    _permission: 'access content'
-
 events.showEvents:
   path: '/display'
   defaults:

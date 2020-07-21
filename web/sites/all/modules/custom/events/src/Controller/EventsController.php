@@ -7,15 +7,6 @@ use Drupal\Core\Url;
 
 class EventsController extends ControllerBase
 {
-
-  public function index()
-  {
-    return [
-      '#theme' => 'event_custom_hook',
-      '#variable1' => 'This is not just a default text!'
-    ];
-  }
-
   public function display()
   {
     $header = ['Id', 'Title', 'Participants','Image','Start_End_Date', 'Category', 'Edit', 'Delete'];
