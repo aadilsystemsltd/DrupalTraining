@@ -1,0 +1,4 @@
+services:
+    events.saySomething:
+        class: Drupal\events\Services\EventService
+        arguments: ['@current_user']

@@ -66,16 +66,16 @@ class DeleteForm extends ConfirmFormBase
   {
     $query = \Drupal::database();
 
-    $ifGalleryDeleted = $query->delete('tbl_gallery')
+    // Delete From tbl_gallery First Because of Foriegn Key Constraints.
+    $query->delete('tbl_gallery')
       ->condition('event_id', $this->cid)
       ->execute();
 
-    if ($ifGalleryDeleted) {
+      // Delete From tbl_event.
       $query->delete('tbl_event')
         ->condition('id', $this->cid)
         ->execute();
       $this->messenger()->addMessage("succesfully deleted");
       $form_state->setRedirect('events.showEvents');
-    }
   }
 }

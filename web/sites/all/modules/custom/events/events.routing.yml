@@ -1,7 +1,7 @@
 events.test:
   path: '/test'
   defaults:
-    _controller: '\Drupal\events\Controller\EventsController::index'
+    _controller: '\Drupal\events\Controller\TestController::index'
     _title: 'test'
   requirements:
     _permission: 'access content'
