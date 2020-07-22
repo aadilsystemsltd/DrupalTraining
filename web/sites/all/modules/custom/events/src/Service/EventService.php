@@ -48,7 +48,7 @@ class EventService
   public function innerJoinWithEventAndGallery(int $eventId)
   {
     $query = $this->database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
-    $query->innerJoin('tbl_gallery', 'g', 'e.id = g.event_id');
+    $query->leftJoin('tbl_gallery', 'g', 'e.id = g.event_id');
     $query->fields('g', ['path']);
     $query->condition('e.id', $eventId);
     $record = $query->execute()->fetchAssoc();

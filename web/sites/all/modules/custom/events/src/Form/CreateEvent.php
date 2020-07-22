@@ -11,17 +11,12 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\file\Entity\File;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-
 
 class CreateEvent extends FormBase
 {
   use MessengerTrait;
-  private $getIdFromRoute;
   public function __construct()
   {
-    $getIdFromRoute = \Drupal::request()->query->get('uid');
   }
 
   public function getFormId()
@@ -31,23 +26,24 @@ class CreateEvent extends FormBase
 
   public function buildForm(array $form, FormStateInterface $form_state)
   {
+    $getIdFromRoute = \Drupal::request()->query->get('id');
     $record = array();
-    if (isset($this->getIdFromRoute)) {
-      $record = \Drupal::service('events.DbService')->innerJoinWithEventAndGallery($this->getIdFromRoute);
+    if (isset($getIdFromRoute)) {
+      $record = \Drupal::service('events.DbService')->innerJoinWithEventAndGallery($getIdFromRoute);
     }
 
     $form['Title'] = array(
       '#type' => 'textfield',
       '#title' => ('Title'),
       '#required' => TRUE,
-      '#default_value' => (isset($record['Title']) && $this->getIdFromRoute) ? $record['Title'] : '',
+      '#default_value' => (isset($record['Title']) && $getIdFromRoute) ? $record['Title'] : '',
     );
 
     $form['Participants'] = array(
       '#type' => 'number',
       '#title' => ('Max Event Participants:'),
       '#required' => TRUE,
-      '#default_value' => (isset($record['Participants']) && $this->getIdFromRoute) ? $record['Participants'] : '',
+      '#default_value' => (isset($record['Participants']) && $getIdFromRoute) ? $record['Participants'] : '',
     );
 
     $form['Image'] = array(
@@ -61,7 +57,6 @@ class CreateEvent extends FormBase
       )
     );
 
-
     $form['Gallery'] = array(
       '#type' => 'managed_file',
       '#title' => ('Event Gallery:'),
@@ -73,18 +68,19 @@ class CreateEvent extends FormBase
       ),
     );
 
+
     $form['Start_End_Date'] = array(
       '#type' => 'date',
       '#title' => ('Start & End Date:'),
       '#required' => TRUE,
-      '#default_value' => (isset($record['Start_End_Date']) && $this->getIdFromRoute) ? $record['Start_End_Date'] : '',
+      '#default_value' => (isset($record['Start_End_Date']) && $getIdFromRoute) ? $this->returnDefaultOfDate($record['Start_End_Date']) : ''
     );
 
     $form['Category'] = array(
       '#type' => 'select',
       '#title' => ('Category'),
       '#options' => $this->returnTaxonomy('event_category'),
-      '#default_value' => (isset($record['Category']) && $this->getIdFromRoute) ? $record['Category'] : '',
+      '#default_value' => (isset($record['Category']) && $getIdFromRoute) ? $record['Category'] : '',
     );
 
     $form['actions']['#type'] = 'actions';
@@ -114,10 +110,11 @@ class CreateEvent extends FormBase
 
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
+    $getIdFromRoute = \Drupal::request()->query->get('id');
     $field = $form_state->getValues();
     $title = $field['Title'];
     $participants = $field['Participants'];
-    $image = "Empty Image";//$field['Image'];
+    $image = "Empty Image"; //$field['Image'];
     $gallery = $field['Gallery'];
     $start_end_date = $field['Start_End_Date'];
     $category = $field['Category'];
@@ -129,8 +126,8 @@ class CreateEvent extends FormBase
       'Category' => $category,
     );
 
-    if (isset($this->getIdFromRoute)) {
-      \Drupal::service('events.DbService')->updateByEventId($field, $this->getIdFromRoute);
+    if (isset($getIdFromRoute)) {
+      \Drupal::service('events.DbService')->updateTableByEventId($field, $getIdFromRoute);
       $this->messenger()->addMessage("succesfully updated");
       $form_state->setRedirect('events.showEvents');
       return;
@@ -147,5 +144,14 @@ class CreateEvent extends FormBase
 
     $this->messenger()->addMessage("succesfully saved");
     $form_state->setRedirect('events.showEvents');
+  }
+
+  private function returnDefaultOfDate($date)
+  {
+    $year = date('Y', strtotime($date));
+    $month = date('m', strtotime($date));
+    $day = date('d', strtotime($date));
+    $d = $year.'-'. $month .'-'. $day;
+    return $d;
   }
 }
