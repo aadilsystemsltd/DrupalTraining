@@ -3,23 +3,21 @@
 namespace Drupal\events\Service;
 
 use Drupal\Core\Session\AccountProxy;
-
+use Drupal\Core\Database\Connection;
 /**
  * EventService is a Drupal 8 service.
  */
 class EventService
 {
-
   private $currentUser;
-  private $database;
-
+  private $connection;
   /**
    * Part of the DependencyInjection magic happening here.
    */
-  public function __construct(AccountProxy $currentUser)
+  public function __construct(AccountProxy $currentUser, Connection $connection)
   {
     $this->currentUser = $currentUser;
-    $this->database = \Drupal::database(); // Inject Db Service...Fix
+    $this->connection = $connection;
   }
 
   /**
@@ -32,22 +30,22 @@ class EventService
 
   public function updateTableByEventId(array $fields, int $eventId)
   {
-    $this->database->update('tbl_event')
-      ->fields($fields)
-      ->condition('id', $eventId)
-      ->execute();
+    $this->connection->update('tbl_event')
+    ->fields($fields)
+    ->condition('id', $eventId)
+    ->execute();
   }
 
   public function insertIntoTable(array $fields, string $tableName)
   {
-    return $this->database->insert($tableName)
+    return $this->connection->insert($tableName)
       ->fields($fields)
       ->execute();
   }
 
   public function innerJoinWithEventAndGallery(int $eventId)
   {
-    $query = $this->database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
+    $query = $this->connection->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
     $query->leftJoin('tbl_gallery', 'g', 'e.id = g.event_id');
     $query->fields('g', ['path']);
     $query->condition('e.id', $eventId);
@@ -57,7 +55,7 @@ class EventService
 
   public function getAllEvents()
   {
-    $query = $this->database->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
+    $query = $this->connection->select('tbl_event', 'e')->fields('e', ['id', 'Title', 'Participants', 'Image', 'Start_End_Date', 'Category']);
     $results = $query->execute()->fetchAllAssoc('id');
     return $results;
   }
@@ -65,12 +63,12 @@ class EventService
 
   public function deleteEvent(int $eventId)
   {
-    $this->database->delete('tbl_gallery')
+    $this->connection->delete('tbl_gallery')
     ->condition('event_id', $eventId)
       ->execute();
 
     // Delete From tbl_event.
-    $this->database->delete('tbl_event')
+    $this->connection->delete('tbl_event')
     ->condition('id', $eventId)
       ->execute();
   }

@@ -1,4 +1,4 @@
 services:
     events.DbService:
         class: \Drupal\events\Service\EventService
-        arguments: ['@current_user']
+        arguments: ['@current_user','@database']
