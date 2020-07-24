@@ -11,7 +11,7 @@ events.showEvents:
 events.form.create:
  path: '/event/create'
  defaults:
-   _title: 'Create Event'
+   _title_callback: '\Drupal\events\Form\CreateEvent::getTitle'
    _form: '\Drupal\events\Form\CreateEvent'
  requirements:
    _permission: 'access content'

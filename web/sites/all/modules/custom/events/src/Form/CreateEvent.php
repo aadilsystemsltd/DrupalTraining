@@ -24,6 +24,16 @@ class CreateEvent extends FormBase
     return 'event_form';
   }
 
+  public function getTitle()
+  {
+    $getIdFromRoute = \Drupal::request()->query->get('id');
+    if (isset($getIdFromRoute))
+    {
+      return 'Edit Event';
+    }
+    return 'Create Event';
+  }
+
   public function buildForm(array $form, FormStateInterface $form_state)
   {
     $getIdFromRoute = \Drupal::request()->query->get('id');
