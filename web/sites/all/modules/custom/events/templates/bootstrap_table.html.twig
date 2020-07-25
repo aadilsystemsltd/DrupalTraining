@@ -1,4 +1,5 @@
-<table class="table table-striped">
+<table class="table table-dark">
+
 	<thead>
 		<tr>
 			{% for i in header %}
@@ -11,14 +12,18 @@
 	<tbody>
 		{% for tr in rows %}
 			<tr>
-				<td>{{ tr.id }}</td>
+				<th scope="row">{{ tr.id }}</th>
 				<td>{{ tr.Title }}</td>
 				<td>{{ tr.Participants }}</td>
 				<td>{{ tr.Image }}</td>
 				<td>{{ tr.Start_End_Date }}</td>
 				<td>{{ tr.Category }}</td>
-				<td><a href="{{ path('events.form.create', {'id': tr.id}) }}">Edit</a></td>
-				<td><a href="{{ path('events.form.delete', {'cid': tr.id}) }}">Delete</a></td>
+				<td>
+					<a href="{{ path('events.form.create', {'id': tr.id}) }}">Edit</a>
+				</td>
+				<td>
+					<a href="{{ path('events.form.delete', {'cid': tr.id}) }}">Delete</a>
+				</td>
 			</tr>
 		{% endfor %}
 	</tbody>

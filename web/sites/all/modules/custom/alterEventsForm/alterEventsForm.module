@@ -1,0 +1,28 @@
+<?php
+function alterEventsForm_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+  if ($form_id == 'node_events_form')
+  {
+    ksm($form);
+
+    $form['title']['widget']['0']['value']['#title'] = t('Bad Guy');
+    $form['title']['widget']['0']['value']['#required'] = true;
+    $form['title']['widget']['0']['value']['#placeholder'] = 'This is Text Box';
+
+    $form['body']['widget']['0']['#title'] = t('This is not good');
+    $form['body']['widget']['0']['#placeholder'] = t('This is not good');
+
+    $form['field_title_']['widget'][0]['value']['#title'] = t('Donec');
+    $form['field_title_']['widget'][0]['value']['#placeholder'] = t('Donec');
+
+    $form['field_event_category']['widget']['#title'] = t('New Vaten');
+
+    $form['field_event_gallery']['widget']['#title'] = t('Not Happened');
+
+    $form['field_max_event_participants']['widget'][0]['value']['#title'] = t('Not Great');
+
+    $form['field_event_image']['widget'][0]['#title'] = t('New Image');
+
+    $form['field_start_and_end_date']['widget'][0]['value']['#title'] = t('New Villen');
+  }
+}

@@ -1,10 +1,11 @@
 <?php
+
 /**
- * It Creates a new Table named tbl_event_2.
+ * It Creates a new Table named tbl_event_2 only for Testing Purpose.
  * This is shown to users on the update.php page.
  */
 
-function event_schema()
+function events_update_8001()
 {
   $database = \Drupal::database();
   $schema = $database->schema();
@@ -57,4 +58,24 @@ function event_schema()
   ];
 
   $schema->createTable($table_name, $table_schema);
+}
+
+/**
+ * Insert New Event In Event Table.
+ * This is shown to users on the update.php page.
+ */
+
+function events_update_8002()
+{
+  $fields =  array(
+    'Title' => 'Example',
+    'Participants' => 100,
+    'Image' => 'No Image',
+    'Start_End_Date' => '2020-07-07',
+    'Category' => 'birthday'
+  );
+  $database = \Drupal::database();
+  $database->insert('tbl_event')
+    ->fields($fields)
+    ->execute();
 }
