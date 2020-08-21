@@ -3,7 +3,7 @@ function alterEventsForm_form_alter(&$form, \Drupal\Core\Form\FormStateInterface
 {
   if ($form_id == 'node_events_form')
   {
-    ksm($form);
+    // ksm($form);
 
     $form['title']['widget']['0']['value']['#title'] = t('Bad Guy');
     $form['title']['widget']['0']['value']['#required'] = true;

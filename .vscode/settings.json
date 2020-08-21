@@ -34,4 +34,9 @@
   "emptyIndent.removeIndent": true,
   "emptyIndent.highlightIndent": false,
   "emptyIndent.highlightColor": "rgba(246,36,89,0.6)",
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#103142",
+    "titleBar.activeBackground": "#17455C",
+    "titleBar.activeForeground": "#F8FCFD"
+  },
 }
